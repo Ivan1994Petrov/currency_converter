@@ -1,0 +1,8 @@
+<h1>Currency pairs</h1>
+<ul>
+{% for currency_pair in currency_pairs %}
+    <li>{{ currency_pair }}</li>
+{% empty %}
+    <li>No currency pairs yet.</li>
+{% endfor %}
+</ul>
