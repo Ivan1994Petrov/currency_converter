@@ -1,0 +1,5 @@
+<h1>for {{ base_currency_obj }} you need to select one of the: </h1>
+
+{% for currency_pair in items %}
+    <h3>{{ currency_pair.quote_currency }}</h3>
+{% endfor %}
