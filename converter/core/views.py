@@ -15,12 +15,10 @@ class CurrencyPairsList(ListView):
 
 class Calculator(View):
     form = CalculatorForm()
+
     def get(self, request):
 
-        data = CurrencyPair.objects.all()
         context = {
-            # I need to rename the key and the value
-            'test': data,
             'form': self.form
         }
 
@@ -43,14 +41,11 @@ class Calculator(View):
         except ObjectDoesNotExist:
             # if I don't have this pair into the DB
 
-            # here I need to filter only for base_currency and to render that for this currency we have only ...
-
             items = CurrencyPair.objects.filter(
                 base_currency=from_currency)
             base_currency_obj = BaseCurrency.objects.get(pk=from_currency)
-            # todo change the name of template
+
             context = {
-                # I need to rename the key and the value
                 'base_currency_obj': base_currency_obj,
                 'items': items,
             }
