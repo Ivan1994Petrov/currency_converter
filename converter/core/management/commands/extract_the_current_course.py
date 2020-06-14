@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.db import IntegrityError
 
 import requests
 from bs4 import BeautifulSoup
@@ -11,8 +12,10 @@ class Command(BaseCommand):
            ' current exchange rate from the BNB website'
 
     def handle(self, *args, **options):
+        """Get data from bnb.bg."""
 
-        url = 'http://bnb.bg/Statistics/StExternalSector/StExchangeRates/StERForeignCurrencies/index.htm'
+        url = 'http://bnb.bg/Statistics/StExternalSector/' \
+              'StExchangeRates/StERForeignCurrencies/index.htm'
 
         page = requests.get(url)
 
@@ -44,24 +47,28 @@ class Command(BaseCommand):
                     quote_currency,
                     quote)
 
-            except:
+            except Exception:
                 pass
 
     def update_database(self,
                         base_currency,
                         quote_currency,
                         quote):
+        """
+        Check and create/update BaseCurrency,
+        QuoteCurrency and CurrencyPair.
+        """
         try:
             BaseCurrency.objects.create(
                 base_currency=base_currency
             )
-        except:
+        except IntegrityError:
             pass
         try:
             QuoteCurrency.objects.create(
                 quote_currency=quote_currency
             )
-        except:
+        except IntegrityError:
             pass
         base_currency_obj_from_db = BaseCurrency.objects.get(
             base_currency=base_currency
@@ -76,7 +83,7 @@ class Command(BaseCommand):
                 quote_currency=quote_currency_obj_from_db,
             )
             currency_pair_obj.delete()
-        except:
+        except CurrencyPair.DoesNotExist:
             pass
 
         CurrencyPair.objects.create(
