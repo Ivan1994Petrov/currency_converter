@@ -1,9 +1,12 @@
 from django import forms
 
-from core.models import BaseCurrency, QuoteCurrency, CurrencyPair
+from core.models import BaseCurrency, QuoteCurrency
 
 
 class CalculatorForm(forms.Form):
-    from_currency = forms.ModelChoiceField(queryset=BaseCurrency.objects.all())
-    to_currency = forms.ModelChoiceField(queryset=QuoteCurrency.objects.all())
+    """Form for calculator page"""
+    from_currency = forms.ModelChoiceField(
+        queryset=BaseCurrency.objects.all())
+    to_currency = forms.ModelChoiceField(
+        queryset=QuoteCurrency.objects.all())
     amount = forms.DecimalField()

@@ -4,17 +4,19 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.core.management import call_command
 
-from core.models import BaseCurrency, QuoteCurrency, CurrencyPair
+from core.models import CurrencyPair
 from core.forms import CalculatorForm
 
 
 class CurrencyPairsList(ListView):
+    """This view handles homepage with all listed currency pairs."""
     context_object_name = 'currency_pairs'
     queryset = CurrencyPair.objects.all()
     template_name = 'pages/list.html'
 
 
 class Calculator(View):
+    """This view handles calculator page."""
     form = CalculatorForm()
 
     def get(self, request):
@@ -26,11 +28,16 @@ class Calculator(View):
 
 
 def ajax_sync_now(request):
+    """
+    This view is responsibly for calling the
+    extract_the_current_course from the admin panel.
+    """
     call_command('extract_the_current_course')
     return JsonResponse({})
 
 
 def ajax_calculator(request):
+    """This view handles ajax for calculator page."""
     base_currency = request.GET.get('fromCurrencyValue', None)
     quote_currency = request.GET.get('toCurrency', None)
     amount = request.GET.get('amount', None)
@@ -46,7 +53,7 @@ def ajax_calculator(request):
             'result': result
         }
         return JsonResponse(data)
-    except:
+    except CurrencyPair.DoesNotExist:
         currency_pairs = CurrencyPair.objects.filter(
             base_currency=base_currency
         )
