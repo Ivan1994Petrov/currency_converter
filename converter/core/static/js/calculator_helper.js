@@ -20,10 +20,10 @@ document.getElementById("calculate").onclick = function () {
           if(typeof(data.result) === 'number'){
             let formattedResult = Number(data.result).toFixed(6)
 
-            let result = $("<h2></h2>").text(`The result is ${formattedResult}`);
+            let result = $("<h2></h2>").text(`Резултатът е: ${formattedResult}`);
             $("body").append(result);
           }else{
-            let result = $("<h2></h2>").text(`Opps can yo choice one of: ${data.result}`);
+            let result = $("<h2></h2>").text(`Моля да изберете една от следните валути: ${data.result}`);
             $("body").append(result);
           }
         }
