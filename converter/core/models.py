@@ -20,7 +20,7 @@ class CurrencyPair(models.Model):
                                       on_delete=models.CASCADE)
     quote_currency = models.ForeignKey(QuoteCurrency,
                                        on_delete=models.CASCADE)
-    quote = models.DecimalField(max_digits=19, decimal_places=10)
+    quote = models.DecimalField(max_digits=19, decimal_places=6)
 
     def __str__(self):
         return f'{self.base_currency} - {self.quote_currency} - {self.quote}'
