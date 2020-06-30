@@ -1,8 +1,17 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}ВАЛУТЕН КАЛКУЛАТОР{% endblock %}
+{% block content %}
 <h1>ВАЛУТЕН КАЛКУЛАТОР</h1>
 <h1>--------------------------</h1>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit" >
+    <input type="button" id="calculate" value="Изчиски">
 </form>
 <h1>--------------------------</h1>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="{% static 'js/calculator_helper.js' %}"></script>
+{% endblock %}

@@ -1,8 +1,13 @@
-<h1>Currency pairs</h1>
+{% extends "pages/base.html" %}
+
+{% block title %}ВСИЧКИ ВАЛУТНИ ДВОЙКИ{% endblock %}
+{% block content %}
+<h1>ВСИЧКИ ВАЛУТНИ ДВОЙКИ</h1>
 <ul>
-{% for currency_pair in currency_pairs %}
+    {% for currency_pair in currency_pairs %}
     <li>{{ currency_pair }}</li>
-{% empty %}
-    <li>No currency pairs yet.</li>
-{% endfor %}
+    {% empty %}
+    <li>Все още няма валутни двойки.</li>
+    {% endfor %}
 </ul>
+{% endblock %}

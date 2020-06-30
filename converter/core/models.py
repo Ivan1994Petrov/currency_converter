@@ -2,6 +2,7 @@ from django.db import models
 
 
 class BaseCurrency(models.Model):
+    """BaseCurrency model."""
     base_currency = models.CharField(max_length=3, unique=True)
 
     def __str__(self):
@@ -9,6 +10,7 @@ class BaseCurrency(models.Model):
 
 
 class QuoteCurrency(models.Model):
+    """QuoteCurrency model."""
     quote_currency = models.CharField(max_length=3, unique=True)
 
     def __str__(self):
@@ -16,11 +18,12 @@ class QuoteCurrency(models.Model):
 
 
 class CurrencyPair(models.Model):
+    """CurrencyPair model."""
     base_currency = models.ForeignKey(BaseCurrency,
                                       on_delete=models.CASCADE)
     quote_currency = models.ForeignKey(QuoteCurrency,
                                        on_delete=models.CASCADE)
-    quote = models.DecimalField(max_digits=19, decimal_places=10)
+    quote = models.DecimalField(max_digits=19, decimal_places=6)
 
     def __str__(self):
         return f'{self.base_currency} - {self.quote_currency} - {self.quote}'
